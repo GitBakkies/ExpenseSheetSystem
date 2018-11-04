@@ -45,7 +45,7 @@
 
     <div class="svg" role="presentation">
         <div class="grails-logo-container">
-            <asset:image src="scan.svg" class="grails-logo"/>
+            <asset:image src="expense sheet system.png" class="ESS-logo"/>
         </div>
     </div>
 
@@ -54,7 +54,7 @@
             <h1>Expense Sheet System</h1>
 
             <p>
-                Blah Blah
+                Welcome to ESS
             </p>
 
             <div id="controllers" role="navigation">
