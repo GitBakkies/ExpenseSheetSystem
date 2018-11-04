@@ -51,7 +51,7 @@
 
     <div id="content" role="main">
         <section class="row colset-2-its">
-            <h1>Expense Sheet System</h1>
+
 
             <p>
                 Welcome to ESS
