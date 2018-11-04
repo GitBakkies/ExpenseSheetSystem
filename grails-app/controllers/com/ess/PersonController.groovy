@@ -1,5 +1,6 @@
 package com.ess
 
+import expensesheetsystem.CurrencyService
 import grails.validation.ValidationException
 import static org.springframework.http.HttpStatus.*
 
@@ -7,20 +8,13 @@ class PersonController {
 
     PersonService personService
 
-  /*  def exchangeRate = (new groovy.json.JsonSlurper()).parse(
-           new InputStreamReader(
-                    (new URL("http://data.fixer.io/api/latest?access_key=73aea855d465bf797f0999cc11d652b3")).newInputStream()
-            )
-    )
-    String rate = { render exchangeRate } */
-
-
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
         params.max = Math.min(max ?: 10, 100)
         respond personService.list(params), model:[personCount: personService.count()]
+        println "okaokaa"
     }
 
     def show(Long id) {
@@ -29,6 +23,7 @@ class PersonController {
 
     def create() {
         respond new Person(params)
+
     }
 
     def save(Person person) {
@@ -36,6 +31,9 @@ class PersonController {
             notFound()
             return
         }
+
+        def currencyService = new CurrencyService()
+        person.setDollarValue(currencyService.convertRandToDollar(person.getBudget()))
 
         try {
             personService.save(person)
@@ -84,6 +82,10 @@ class PersonController {
             notFound()
             return
         }
+
+        Person person = Person.findById(id)
+        def transactionList = Transactions.findAllByPerson(person)
+        transactionList*.delete()
 
         personService.delete(id)
 

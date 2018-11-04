@@ -1,5 +1,6 @@
 package com.ess
 
+import expensesheetsystem.CurrencyService
 import grails.converters.JSON
 import grails.validation.ValidationException
 import org.grails.web.json.JSONObject
@@ -23,32 +24,17 @@ class TransactionsController {
 
     def create() {
         respond new Transactions(params)
+
     }
 
     def save(Transactions transactions) {
         def person = transactions.getPerson()
+        def currencyService = new CurrencyService()
+
         person.setBudget(person.getBudget()-transactions.getTransactionPrice())
+        person.setDollarValue(currencyService.convertRandToDollar(person.getBudget()))
 
-        def jsonString = '''{
-                "success": true,
-                "timestamp": 1519296206,
-                "base": "EUR",
-                "date": "2018-10-29",
-                "rates": {
-                    "AUD": 1.566015,
-                    "CAD": 1.560132,
-                    "CHF": 1.154727,
-                    "CNY": 7.827874,
-                    "GBP": 0.882047,
-                    "JPY": 132.360679,
-                    "USD": 1.23396
-                }
-}      '''
-
-        JSONObject json = JSON.parse(jsonString)
-
-        println json['rates'].AUD
-
+        transactions.setDollarValue(currencyService.convertRandToDollar(transactions.getTransactionPrice()))
 
         if (transactions == null) {
             notFound()

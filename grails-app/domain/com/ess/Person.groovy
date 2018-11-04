@@ -7,15 +7,15 @@ class Person {
     String surname
     Double budget
     String date = new Date()
-
-
+    Double dollarValue
 
 
     static constraints = {
         surname blank: false, nullable: false
         name blank: false, nullable: false
         budget blank: false, nullable: false
-        date editable: false, display: false
+        dollarValue display:true, nullable:true, editable: false
+        date editable: false, display: true
     }
     String toString() {return name}
 }

@@ -29,7 +29,10 @@
             <g:form resource="${this.person}" method="PUT">
                 <g:hiddenField name="version" value="${this.person?.version}" />
                 <fieldset class="form">
-                    <f:all bean="person"/>
+                    %{--<f:all bean="person"/>--}%
+                    <f:field bean="person" property="surname"/>
+                    <f:field bean="person" property="name"/>
+                    <f:field bean="person" property="budget"/>
                 </fieldset>
                 <fieldset class="buttons">
                     <input class="save" type="submit" value="${message(code: 'default.button.update.label', default: 'Update')}" />
